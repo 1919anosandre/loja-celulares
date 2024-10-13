@@ -87,11 +87,52 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleButton.addEventListener('click', toggleTheme);
 });
 
+const cep = document.querySelector('.cep')
+const localidade = document.querySelector('.adress')
+const bairro = document.querySelector('.bairro')
+const cidade = document.querySelector('.cidade')
+const rowcep = document.querySelector('.bi-caret-down-fill')
+const containerCep = document.querySelector('.container-cep')
+const buscarCep = document.querySelector('.buscar-cep')
+
+fetch("https://viacep.com.br/ws/01001000/json/")
+    .then(Response => Response.json())
+    .then(data => {
+        console.log(data)
+        if (buscarCep) {
+            cep.innerHTML += data.cep
+        } else {
+            cep.innerHTML = `cep invalido`
+        }
+    })
+
+rowcep.addEventListener('click', () => {
+    containerCep.style.display = 'flex'
+})
+/*
+function Trim(strTexto) {
+    return strTexto.replace(/^\s+|\s+$/g, '');
+}
+
+function IsCEP(strCEP, blnVazio) {
+    var objER = /^[0-9]{2}\.[0-9]{3}-[0-9]{3}$/;
+    strCEP = Trim(strCEP);
+    if (strCEP.length > 0) {
+        if (objER.test(strCEP)) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return blnVazio;
+    }
+}
+*/
 const containerCarrinho = document.querySelector('.container-carrinho')
 const itensCarrinho = document.querySelector('.itens-carrinho')
 const adicionarCarrinho = document.getElementsByClassName('adicionarCarrinho')
 for (let i = 0; i < adicionarCarrinho.length; i++) {
-    adicionarCarrinho[i].addEventListener('click', function() {
+    adicionarCarrinho[i].addEventListener('click', function () {
         const produto = this.parentNode; // Get the parent element (product card)
         const imgProduto = produto.querySelector('.imgProduto');
         const nomeProduto = produto.querySelector('.nomeProduto');
